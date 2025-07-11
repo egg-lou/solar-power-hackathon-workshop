@@ -166,14 +166,6 @@ export default function NoteEditor({ note, isOpen, onClose, onSave, isCreating }
           {/* Show success message and image section after creation */}
           {isCreating && createdNote && (
             <div className="space-y-4">
-              <Alert className="border-green-300 bg-gradient-to-r from-green-50 to-emerald-50">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-green-600" />
-                  <AlertDescription className="text-green-800 font-medium">
-                    ✨ Your note "<span className="font-semibold">{createdNote.title}</span>" has been created! Now you can add images.
-                  </AlertDescription>
-                </div>
-              </Alert>
               
               <div className="p-4 sm:p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">

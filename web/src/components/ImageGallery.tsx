@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Upload, Trash2, Image as ImageIcon, X, Lightbulb } from "lucide-react";
+import { Upload, Trash2, Image as ImageIcon, X } from "lucide-react";
 import notesService from "@/service/notes";
+import { environment } from "@/environment";
 
 interface ImageGalleryProps {
   noteId: string;
@@ -33,7 +34,7 @@ export default function ImageGallery({
     
     // Fallback: construct direct S3 URL
     // This assumes your S3 bucket allows public read access
-    return `https://notes-images-bucket-sph.s3.ap-southeast-1.amazonaws.com/${imageKey}`;
+    return `${environment.s3Endpoint}/${imageKey}`;
   };
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {

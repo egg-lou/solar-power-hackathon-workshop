@@ -1,19 +1,8 @@
-# Use AWS Lambda Python runtime
 FROM python:3.13-alpine
-
-# Copy Lambda Web Adapter
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.1 /lambda-adapter ${LAMBDA_RUNTIME_DIR}
-
-# Set environment variables for Lambda Web Adapter
-ENV AWS_LWA_INVOKE_MODE=RESPONSE_STREAM
-ENV AWS_LWA_PORT=8000
-
-# Copy requirements and install dependencies
-COPY requirements.txt ${LAMBDA_TASK_ROOT}
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
-COPY main.py ${LAMBDA_TASK_ROOT}
-
-# Set the CMD to your handler
-CMD ["python", "main.py"]
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.9.1 /lambda-adapter /opt/extensions/lambda-adapter
+ENV PORT=8000
+WORKDIR /var/task
+COPY requirements.txt ./
+RUN python -m pip install -r requirements.txt
+COPY *.py ./
+CMD exec uvicorn --port=$PORT --host=0.0.0.0 --timeout-keep-alive=5 --limit-max-uploads=10 --limit-concurrency=100 --access-log main:app
