@@ -5,4 +5,4 @@ WORKDIR /var/task
 COPY requirements.txt ./
 RUN python -m pip install -r requirements.txt
 COPY *.py ./
-CMD exec uvicorn --port=$PORT --host=0.0.0.0 --timeout-keep-alive=5 --limit-max-uploads=10 --limit-concurrency=100 --access-log main:app
+CMD exec uvicorn --port=$PORT main:app

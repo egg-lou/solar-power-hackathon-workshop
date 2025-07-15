@@ -101,6 +101,7 @@ async def root():
 async def get_all_notes():
     try:
         response = table.scan()
+        print(response)
         notes = []
         for item in response['Items']:
             # Generate signed URLs for images
